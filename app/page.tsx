@@ -1,9 +1,12 @@
+import NavBar from '@/components/navbar'
 import Image from 'next/image'
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="min-h-screen">
+      <NavBar />
       <h1>Issue Tracker</h1>
+      
     </main>
   )
 }

@@ -14,7 +14,7 @@ import {
 import { usePathname } from "next/navigation"
 
 const navigation = [
-  { name: "Dashboard", href: "/dashboard" },
+  { name: "Dashboard", href: "/" },
   { name: "Issues", href: "/isssues" },
 ]
 
@@ -23,8 +23,7 @@ function classNames(...classes: string[]) {
 }
 
 export default function NavBar() {
-
-    const pathname = usePathname()
+  const pathname = usePathname()
 
   return (
     <Disclosure as='nav' className='bg-white shadow'>
@@ -56,11 +55,15 @@ export default function NavBar() {
                   <div className='flex space-x-4'>
                     <NavigationMenu>
                       <NavigationMenuList>
-                        {navigation.map(({name, href}) => (
-                          <NavigationMenuItem>
+                        {navigation.map(({ name, href }) => (
+                          <NavigationMenuItem key={name}>
                             <Link href={href} legacyBehavior passHref>
                               <NavigationMenuLink
-                                className={navigationMenuTriggerStyle()}
+                                className={
+                                  href === pathname
+                                    ? "group inline-flex h-9 w-max items-center justify-center rounded-md bg-slate-100 px-4 py-2 text-sm font-medium text-slate-800 transition-colors"
+                                    : navigationMenuTriggerStyle()
+                                }
                               >
                                 {name}
                               </NavigationMenuLink>
@@ -153,7 +156,7 @@ export default function NavBar() {
 
           <Disclosure.Panel className='sm:hidden'>
             <div className='space-y-1 px-2 pb-3 pt-2'>
-              {navigation.map(({href, name}) => (
+              {navigation.map(({ href, name }) => (
                 <Disclosure.Button
                   key={name}
                   as='a'

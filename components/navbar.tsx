@@ -61,7 +61,7 @@ export default function NavBar() {
                               <NavigationMenuLink
                                 className={
                                   href === pathname
-                                    ? "group inline-flex h-9 w-max items-center justify-center rounded-md bg-slate-100 px-4 py-2 text-sm font-medium text-slate-800 transition-colors"
+                                    ? "group inline-flex h-9 w-max items-center justify-center rounded-md hover:bg-orange-100 px-4 py-2 text-sm font-medium text-orange-500 transition-colors"
                                     : navigationMenuTriggerStyle()
                                 }
                               >

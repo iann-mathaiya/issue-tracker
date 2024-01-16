@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,6 +15,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { createIssueSchema } from "@/lib/types"
+import { Textarea } from "@/components/ui/textarea"
 
 export default function NewIssue() {
   const form = useForm<z.infer<typeof createIssueSchema>>({
@@ -31,7 +31,10 @@ export default function NewIssue() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='max-w-sm mx-auto py-4 sm:py-8 space-y-8'>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className='max-w-sm mx-auto py-4 sm:py-8 space-y-8'
+      >
         <FormField
           control={form.control}
           name='title'
@@ -46,14 +49,14 @@ export default function NewIssue() {
           )}
         />
 
-<FormField
+        <FormField
           control={form.control}
           name='description'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input placeholder='Issue Description' {...field} />
+                <Textarea placeholder='Describe the issue' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -34,7 +34,7 @@ export default function NewIssue() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='max-w-sm mx-auto py-4 sm:py-8 space-y-8'
+        className='max-w-3xl mx-auto py-4 sm:py-8 space-y-8'
       >
         <FormField
           control={form.control}

@@ -1,8 +1,8 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 import * as z from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { createIssueSchema } from "@/lib/types"
 import { Textarea } from "@/components/ui/textarea"
+import { PlateEditor } from "@/components/plate-editor"
 
 export default function NewIssue() {
   const form = useForm<z.infer<typeof createIssueSchema>>({
@@ -49,19 +50,7 @@ export default function NewIssue() {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name='description'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea placeholder='Describe the issue' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <PlateEditor />
         <Button type='submit'>Submit</Button>
       </form>
     </Form>

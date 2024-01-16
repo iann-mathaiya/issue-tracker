@@ -1,6 +1,6 @@
-import { TypographyH1 } from "@/components/typography/typography-h1"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { TypographyH1 } from "@/components/typography/typography-h1"
 
 export default function Issues() {
   return (

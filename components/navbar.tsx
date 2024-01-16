@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/navigation-menu"
 import { usePathname } from "next/navigation"
 
+import logo from '@/public/3d-fluency-ladybird.png'
+
 const navigation = [
   { name: "Dashboard", href: "/" },
   { name: "Issues", href: "/issues" },
@@ -47,7 +49,7 @@ export default function NavBar() {
                 <div className='flex flex-shrink-0 items-center'>
                   <img
                     className='w-10 h-10 rotate-12'
-                    src='./3d-fluency-ladybird.png'
+                    src={logo.src}
                     alt='Issue Tracker Logo'
                   />
                 </div>

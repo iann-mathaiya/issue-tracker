@@ -34,7 +34,7 @@ export default function NewIssue() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='max-w-3xl mx-auto py-4 sm:py-8 space-y-8'
+        className='max-w-3xl mx-auto p-4 sm:p-8 space-y-8'
       >
         <FormField
           control={form.control}
@@ -50,7 +50,10 @@ export default function NewIssue() {
           )}
         />
 
-        <PlateEditor />
+        <div className="-space-y-1">
+          <PlateEditor />
+        </div>
+
         <Button type='submit'>Submit</Button>
       </form>
     </Form>

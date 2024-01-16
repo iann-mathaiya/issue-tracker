@@ -8,6 +8,8 @@ import { Editor } from "@/components/plate-ui/editor"
 import { plugins } from "@/lib/editor-config/plugins"
 import { FixedToolbar } from "./plate-ui/fixed-toolbar"
 import { FixedToolbarButtons } from "./plate-ui/fixed-toolbar-buttons"
+import { FloatingToolbar } from "./plate-ui/floating-toolbar"
+import { FloatingToolbarButtons } from "./plate-ui/floating-toolbar-buttons"
 
 const initialValue = [
   {
@@ -26,6 +28,10 @@ export function PlateEditor() {
         </FixedToolbar>
 
         <Editor placeholder='Type your description here.' />
+
+        <FloatingToolbar>
+            <FloatingToolbarButtons />
+          </FloatingToolbar>
       </Plate>
     </DndProvider>
   )

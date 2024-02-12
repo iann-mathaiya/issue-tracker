@@ -29,7 +29,6 @@ import { FixedToolbarButtons } from "@/components/plate-ui/fixed-toolbar-buttons
 import { FloatingToolbarButtons } from "@/components/plate-ui/floating-toolbar-buttons"
 
 import { Node } from "slate"
-import { Divide } from "lucide-react"
 
 export default function NewIssue() {
   const form = useForm<z.infer<typeof createIssueSchema>>({
@@ -66,34 +65,28 @@ export default function NewIssue() {
         />
 
         <div className='-space-y-1'>
+          <FormLabel>Description</FormLabel>
           <Controller
             name='description'
             control={form.control}
             render={({ field }) => (
-                <FormItem>
-                  <DndProvider backend={HTML5Backend}>
-                    <FormLabel>Description</FormLabel>
-                    <FormControl>
-                      <Plate
-                        plugins={plugins}
-                        initialValue={initialValue}
-                        {...field}
-                      >
-                        <FixedToolbar>
-                          <FixedToolbarButtons />
-                        </FixedToolbar>
+              <DndProvider backend={HTML5Backend}>
+                  <Plate
+                    {...field}
+                    plugins={plugins}
+                    initialValue={initialValue}
+                  >
+                    <FixedToolbar>
+                      <FixedToolbarButtons />
+                    </FixedToolbar>
 
-                        <Editor placeholder='Type your description here.' />
+                    <Editor placeholder='Type your description here.' />
 
-                        <FloatingToolbar>
-                          <FloatingToolbarButtons />
-                        </FloatingToolbar>
-                      </Plate>
-                    </FormControl>
-                    <FormMessage />
-                  </DndProvider>
-                </FormItem>
-
+                    <FloatingToolbar>
+                      <FloatingToolbarButtons />
+                    </FloatingToolbar>
+                  </Plate>
+              </DndProvider>
             )}
           />
         </div>

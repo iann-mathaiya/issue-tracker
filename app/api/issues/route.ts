@@ -4,13 +4,13 @@ import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
   const body = await request.json()
-  const issueValidation = createIssueSchema.safeParse(body)
+  // const issueValidation = createIssueSchema.safeParse(body)
 
-  if (!issueValidation.success) {
-    return NextResponse.json(issueValidation.error.errors, {
-      status: 400,
-    })
-  }
+  // if (!issueValidation.success) {
+  //   return NextResponse.json(issueValidation.error.errors, {
+  //     status: 400,
+  //   })
+  // }
 
   const newIssue = await prisma.issue.create({
     data: {

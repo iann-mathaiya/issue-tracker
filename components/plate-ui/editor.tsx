@@ -58,10 +58,10 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       variant,
       ...props
     },
-    ref
+    editorRef
   ) => {
     return (
-      <div ref={ref} className="relative w-full">
+      <div ref={editorRef} className="relative w-full">
         <PlateContent
           className={cn(
             editorVariants({

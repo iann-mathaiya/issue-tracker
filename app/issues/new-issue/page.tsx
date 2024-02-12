@@ -28,25 +28,28 @@ import { FloatingToolbar } from "@/components/plate-ui/floating-toolbar"
 import { FixedToolbarButtons } from "@/components/plate-ui/fixed-toolbar-buttons"
 import { FloatingToolbarButtons } from "@/components/plate-ui/floating-toolbar-buttons"
 
+import { Node } from 'slate'
+
 export default function NewIssue() {
   // const form = useForm<z.infer<typeof createIssueSchema>>({
   //   resolver: zodResolver(createIssueSchema),
   //   defaultValues: {
   //     title: "",
-  //     // description: "",
+  //     description: initialValue,
   //   },
   // })
 
   const form = useForm<z.infer<typeof createIssueSchema>>()
 
   function onSubmit(values: z.infer<typeof createIssueSchema>) {
+    // console.log(`title:${values.title}, description:${values.description.map(val => Node.string(val)).join('\n')}`)
     console.log(values)
   }
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit((data) => console.log(data))}
+        onSubmit={form.handleSubmit(onSubmit)}
         className='max-w-3xl mx-auto p-4 sm:p-8 space-y-8'
       >
         <FormField

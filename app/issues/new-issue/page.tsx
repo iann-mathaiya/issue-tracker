@@ -28,18 +28,17 @@ import { FloatingToolbar } from "@/components/plate-ui/floating-toolbar"
 import { FixedToolbarButtons } from "@/components/plate-ui/fixed-toolbar-buttons"
 import { FloatingToolbarButtons } from "@/components/plate-ui/floating-toolbar-buttons"
 
-import { Node } from 'slate'
+import { Node } from "slate"
+import { Divide } from "lucide-react"
 
 export default function NewIssue() {
-  // const form = useForm<z.infer<typeof createIssueSchema>>({
-  //   resolver: zodResolver(createIssueSchema),
-  //   defaultValues: {
-  //     title: "",
-  //     description: initialValue,
-  //   },
-  // })
-
-  const form = useForm<z.infer<typeof createIssueSchema>>()
+  const form = useForm<z.infer<typeof createIssueSchema>>({
+    resolver: zodResolver(createIssueSchema),
+    defaultValues: {
+      title: "",
+      description: initialValue,
+    },
+  })
 
   function onSubmit(values: z.infer<typeof createIssueSchema>) {
     // console.log(`title:${values.title}, description:${values.description.map(val => Node.string(val)).join('\n')}`)
@@ -71,23 +70,30 @@ export default function NewIssue() {
             name='description'
             control={form.control}
             render={({ field }) => (
-              <DndProvider backend={HTML5Backend}>
-                <FormLabel>Description</FormLabel>
-                <Plate plugins={plugins} initialValue={initialValue} {...field}>
-                  <FixedToolbar>
-                    <FixedToolbarButtons />
-                  </FixedToolbar>
+                <FormItem>
+                  <DndProvider backend={HTML5Backend}>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Plate
+                        plugins={plugins}
+                        initialValue={initialValue}
+                        {...field}
+                      >
+                        <FixedToolbar>
+                          <FixedToolbarButtons />
+                        </FixedToolbar>
 
-                  <Editor
-                    placeholder='Type your description here.' 
-                  />
+                        <Editor placeholder='Type your description here.' />
 
-                  <FloatingToolbar>
-                    <FloatingToolbarButtons />
-                  </FloatingToolbar>
-                </Plate>
-                <FormMessage />
-              </DndProvider>
+                        <FloatingToolbar>
+                          <FloatingToolbarButtons />
+                        </FloatingToolbar>
+                      </Plate>
+                    </FormControl>
+                    <FormMessage />
+                  </DndProvider>
+                </FormItem>
+
             )}
           />
         </div>

@@ -29,8 +29,13 @@ import { FixedToolbarButtons } from "@/components/plate-ui/fixed-toolbar-buttons
 import { FloatingToolbarButtons } from "@/components/plate-ui/floating-toolbar-buttons"
 
 import { Node } from "slate"
+import  axios from "axios"
+import { useRouter } from "next/navigation"
 
 export default function NewIssue() {
+
+  const router = useRouter()
+
   const form = useForm<z.infer<typeof createIssueSchema>>({
     resolver: zodResolver(createIssueSchema),
     defaultValues: {
@@ -39,9 +44,18 @@ export default function NewIssue() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof createIssueSchema>) {
-    // console.log(`title:${values.title}, description:${values.description.map(val => Node.string(val)).join('\n')}`)
-    console.log(values)
+  function serialize(value: any[]) {
+    return value.map((val) => Node.string(val)).join("\n")
+  }
+
+  async function onSubmit(values: z.infer<typeof createIssueSchema>) {
+    const data = {
+      title: values.title,
+      description: serialize(values.description),
+    }
+
+    await axios.post("/api/issues", data)
+    router.push('/issues')
   }
 
   return (
@@ -71,21 +85,17 @@ export default function NewIssue() {
             control={form.control}
             render={({ field }) => (
               <DndProvider backend={HTML5Backend}>
-                  <Plate
-                    {...field}
-                    plugins={plugins}
-                    initialValue={initialValue}
-                  >
-                    <FixedToolbar>
-                      <FixedToolbarButtons />
-                    </FixedToolbar>
+                <Plate {...field} plugins={plugins} initialValue={initialValue}>
+                  <FixedToolbar>
+                    <FixedToolbarButtons />
+                  </FixedToolbar>
 
-                    <Editor placeholder='Type your description here.' />
+                  <Editor placeholder='Type your description here.' />
 
-                    <FloatingToolbar>
-                      <FloatingToolbarButtons />
-                    </FloatingToolbar>
-                  </Plate>
+                  <FloatingToolbar>
+                    <FloatingToolbarButtons />
+                  </FloatingToolbar>
+                </Plate>
               </DndProvider>
             )}
           />

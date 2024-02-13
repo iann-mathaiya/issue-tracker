@@ -31,16 +31,17 @@ import { FloatingToolbarButtons } from "@/components/plate-ui/floating-toolbar-b
 import axios from "axios"
 import { Node } from "slate"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+
+type IssueSchema = z.infer<typeof createIssueSchema>
 
 export default function NewIssue() {
   const router = useRouter()
 
-  const form = useForm<z.infer<typeof createIssueSchema>>({
+  const form = useForm<IssueSchema>({
     resolver: zodResolver(createIssueSchema),
     defaultValues: {
       title: "",
-      // description: initialValue,
+      description: initialValue,
     },
   })
 
@@ -48,15 +49,19 @@ export default function NewIssue() {
     return value.map((val) => Node.string(val)).join("\n")
   }
 
-  async function onSubmit(values: z.infer<typeof createIssueSchema>) {
+  async function onSubmit(values: IssueSchema) {
     try {
       const data = {
         title: values.title,
         description: serialize(values.description),
       }
-      // await axios.post("/api/issues", data)
-      // router.push("/issues")
-    } catch (error) {}
+
+      await axios.post("/api/issues", data)
+
+      router.push("/issues")
+    } catch (error) {
+      // throw new Error(error)
+    }
   }
 
   return (
@@ -86,7 +91,7 @@ export default function NewIssue() {
             render={({ field }) => (
               <>
                 <DndProvider backend={HTML5Backend}>
-                <FormLabel>Description</FormLabel>
+                  <FormLabel>Description</FormLabel>
                   <Plate {...field} plugins={plugins}>
                     <FixedToolbar>
                       <FixedToolbarButtons />
@@ -94,7 +99,7 @@ export default function NewIssue() {
 
                     <Editor placeholder='Type your description here.' />
 
-                    <FormMessage className='mt-40' />
+                    <FormMessage className='pt-4' />
                     <FloatingToolbar>
                       <FloatingToolbarButtons />
                     </FloatingToolbar>

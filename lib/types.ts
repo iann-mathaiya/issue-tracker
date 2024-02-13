@@ -12,5 +12,5 @@ export const createIssueSchema = z.object({
       children: z.array(z.object({ text: z.string() })),
     }),
     { required_error: "Description is required" }
-  ),
+  )
 })

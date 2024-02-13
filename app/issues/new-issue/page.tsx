@@ -28,14 +28,18 @@ import { FloatingToolbar } from "@/components/plate-ui/floating-toolbar"
 import { FixedToolbarButtons } from "@/components/plate-ui/fixed-toolbar-buttons"
 import { FloatingToolbarButtons } from "@/components/plate-ui/floating-toolbar-buttons"
 
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 import { Node } from "slate"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { twMerge } from "tailwind-merge"
 
 type IssueSchema = z.infer<typeof createIssueSchema>
 
 export default function NewIssue() {
   const router = useRouter()
+
+  const [error, setError] = useState(false)
 
   const form = useForm<IssueSchema>({
     resolver: zodResolver(createIssueSchema),
@@ -53,14 +57,19 @@ export default function NewIssue() {
     try {
       const data = {
         title: values.title,
-        description: serialize(values.description),
+        description:
+          form.getFieldState("description").isDirty &&
+          serialize(values.description),
       }
 
       await axios.post("/api/issues", data)
 
       router.push("/issues")
     } catch (error) {
-      // throw new Error(error)
+      if (axios.isAxiosError(error)) {
+        console.log(error)
+        setError(true)
+      }
     }
   }
 
@@ -91,7 +100,7 @@ export default function NewIssue() {
             render={({ field }) => (
               <>
                 <DndProvider backend={HTML5Backend}>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel className={twMerge(error && 'text-red-500')}>Description</FormLabel>
                   <Plate {...field} plugins={plugins}>
                     <FixedToolbar>
                       <FixedToolbarButtons />
@@ -100,6 +109,9 @@ export default function NewIssue() {
                     <Editor placeholder='Type your description here.' />
 
                     <FormMessage className='pt-4' />
+                    {error && (
+                      <FormMessage>Description is required</FormMessage>
+                    )}
                     <FloatingToolbar>
                       <FloatingToolbarButtons />
                     </FloatingToolbar>

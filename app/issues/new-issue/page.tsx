@@ -1,7 +1,7 @@
 "use client"
 
 import * as z from "zod"
-import { useForm, Controller } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Button } from "@/components/ui/button"
@@ -28,9 +28,10 @@ import { FloatingToolbar } from "@/components/plate-ui/floating-toolbar"
 import { FixedToolbarButtons } from "@/components/plate-ui/fixed-toolbar-buttons"
 import { FloatingToolbarButtons } from "@/components/plate-ui/floating-toolbar-buttons"
 
-import { Node } from "slate"
 import axios from "axios"
+import { Node } from "slate"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 export default function NewIssue() {
   const router = useRouter()
@@ -39,7 +40,7 @@ export default function NewIssue() {
     resolver: zodResolver(createIssueSchema),
     defaultValues: {
       title: "",
-      description: initialValue,
+      // description: initialValue,
     },
   })
 
@@ -48,17 +49,14 @@ export default function NewIssue() {
   }
 
   async function onSubmit(values: z.infer<typeof createIssueSchema>) {
-    const data = {
-      title: values.title,
-      description: serialize(values.description),
-    }
-
-    console.log(data.description.length)
-
-    // try {
-    //   await axios.post("/api/issues", data)
-    //   router.push("/issues")
-    // } catch (error) {}
+    try {
+      const data = {
+        title: values.title,
+        description: serialize(values.description),
+      }
+      // await axios.post("/api/issues", data)
+      // router.push("/issues")
+    } catch (error) {}
   }
 
   return (
@@ -68,8 +66,8 @@ export default function NewIssue() {
         className='max-w-3xl mx-auto p-4 sm:p-8 space-y-8'
       >
         <FormField
-          control={form.control}
           name='title'
+          control={form.control}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Title</FormLabel>
@@ -82,24 +80,27 @@ export default function NewIssue() {
         />
 
         <div className='-space-y-1'>
-          <FormLabel>Description</FormLabel>
-          <Controller
+          <FormField
             name='description'
             control={form.control}
             render={({ field }) => (
-              <DndProvider backend={HTML5Backend}>
-                <Plate {...field} plugins={plugins} initialValue={initialValue}>
-                  <FixedToolbar>
-                    <FixedToolbarButtons />
-                  </FixedToolbar>
+              <>
+                <DndProvider backend={HTML5Backend}>
+                <FormLabel>Description</FormLabel>
+                  <Plate {...field} plugins={plugins}>
+                    <FixedToolbar>
+                      <FixedToolbarButtons />
+                    </FixedToolbar>
 
-                  <Editor placeholder='Type your description here.' />
+                    <Editor placeholder='Type your description here.' />
 
-                  <FloatingToolbar>
-                    <FloatingToolbarButtons />
-                  </FloatingToolbar>
-                </Plate>
-              </DndProvider>
+                    <FormMessage className='mt-40' />
+                    <FloatingToolbar>
+                      <FloatingToolbarButtons />
+                    </FloatingToolbar>
+                  </Plate>
+                </DndProvider>
+              </>
             )}
           />
         </div>

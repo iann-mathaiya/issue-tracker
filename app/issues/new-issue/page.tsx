@@ -49,8 +49,12 @@ export default function NewIssue() {
     },
   })
 
-  function serialize(value: any[]) {
-    return value.map((val) => Node.string(val)).join("\n")
+  function serialize(value: any[] | string) {
+    if (Array.isArray(value)) {
+      return value.map((val) => Node.string(val)).join("\n")
+    }
+
+    return value
   }
 
   async function onSubmit(values: IssueSchema) {

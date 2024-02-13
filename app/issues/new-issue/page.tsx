@@ -71,7 +71,6 @@ export default function NewIssue() {
       router.push("/issues")
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.log(error)
         setError(true)
       }
     }
@@ -104,7 +103,9 @@ export default function NewIssue() {
             render={({ field }) => (
               <>
                 <DndProvider backend={HTML5Backend}>
-                  <FormLabel className={twMerge(error && 'text-red-500')}>Description</FormLabel>
+                  <FormLabel className={twMerge(error && "text-red-500")}>
+                    Description
+                  </FormLabel>
                   <Plate {...field} plugins={plugins}>
                     <FixedToolbar>
                       <FixedToolbarButtons />

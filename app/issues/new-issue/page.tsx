@@ -1,7 +1,12 @@
 "use client"
 
 import * as z from "zod"
+import axios from "axios"
+import { Node } from "slate"
+import { useState } from "react"
+import { twMerge } from "tailwind-merge"
 import { useForm } from "react-hook-form"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Button } from "@/components/ui/button"
@@ -27,12 +32,6 @@ import { FixedToolbar } from "@/components/plate-ui/fixed-toolbar"
 import { FloatingToolbar } from "@/components/plate-ui/floating-toolbar"
 import { FixedToolbarButtons } from "@/components/plate-ui/fixed-toolbar-buttons"
 import { FloatingToolbarButtons } from "@/components/plate-ui/floating-toolbar-buttons"
-
-import axios, { AxiosError } from "axios"
-import { Node } from "slate"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
-import { twMerge } from "tailwind-merge"
 
 type IssueSchema = z.infer<typeof createIssueSchema>
 
@@ -67,7 +66,6 @@ export default function NewIssue() {
       }
 
       await axios.post("/api/issues", data)
-
       router.push("/issues")
     } catch (error) {
       if (axios.isAxiosError(error)) {

@@ -14,3 +14,5 @@ export const createIssueSchema = z.object({
     { required_error: "Description is required" }
   ).or(z.string())
 })
+
+export type IssueSchema = z.infer<typeof createIssueSchema>

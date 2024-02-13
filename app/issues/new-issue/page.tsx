@@ -29,11 +29,10 @@ import { FixedToolbarButtons } from "@/components/plate-ui/fixed-toolbar-buttons
 import { FloatingToolbarButtons } from "@/components/plate-ui/floating-toolbar-buttons"
 
 import { Node } from "slate"
-import  axios from "axios"
+import axios from "axios"
 import { useRouter } from "next/navigation"
 
 export default function NewIssue() {
-
   const router = useRouter()
 
   const form = useForm<z.infer<typeof createIssueSchema>>({
@@ -54,8 +53,12 @@ export default function NewIssue() {
       description: serialize(values.description),
     }
 
-    await axios.post("/api/issues", data)
-    router.push('/issues')
+    console.log(data.description.length)
+
+    // try {
+    //   await axios.post("/api/issues", data)
+    //   router.push("/issues")
+    // } catch (error) {}
   }
 
   return (

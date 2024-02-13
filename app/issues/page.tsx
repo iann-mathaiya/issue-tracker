@@ -18,7 +18,7 @@ export default async function Issues() {
 
       <div>
         {issues.map(issue => (
-          <pre>
+          <pre key={issue.id}>
             {JSON.stringify(issue, null, 2)}
           </pre>
         ))}
